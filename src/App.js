@@ -1,27 +1,19 @@
 import { STATE_LOGIN, STATE_SIGNUP } from 'components/AuthForm';
 import GAListener from 'components/GAListener';
-import { EmptyLayout, LayoutRoute, MainLayout } from 'components/Layout';
-import AlertPage from 'pages/AlertPage';
-import AuthModalPage from 'pages/AuthModalPage';
-import AuthPage from 'pages/AuthPage';
-import BadgePage from 'pages/BadgePage';
-import ButtonGroupPage from 'pages/ButtonGroupPage';
-import ButtonPage from 'pages/ButtonPage';
-import CardPage from 'pages/CardPage';
-import ChartPage from 'pages/ChartPage';
+import { EmptyLayout, LayoutRoute, MainLayout, PageLayout } from 'components/Layout';
+
 // pages
+import AuthPage from 'pages/AuthPage';
 import DashboardPage from 'pages/DashboardPage';
-import DropdownPage from 'pages/DropdownPage';
-import FormPage from 'pages/FormPage';
-import InputGroupPage from 'pages/InputGroupPage';
-import ModalPage from 'pages/ModalPage';
-import ProgressPage from 'pages/ProgressPage';
-import TablePage from 'pages/TablePage';
-import TypographyPage from 'pages/TypographyPage';
-import WidgetPage from 'pages/WidgetPage';
+import ProductsPage from './pages/admin/ProductsPage';
+
+import NoFoundPage from 'pages/errors/NoFoundPage';
+
+import HomePage from './pages/Client/HomePage';
+
 import React from 'react';
 import componentQueries from 'react-component-queries';
-import { BrowserRouter, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 import './styles/reduction.css';
 
 const getBasename = () => {
@@ -36,8 +28,14 @@ class App extends React.Component {
           <Switch>
             <LayoutRoute
               exact
+              path="/"
+              layout={PageLayout}
+              component={HomePage}
+            />
+            <LayoutRoute
+              exact
               path="/login"
-              layout={EmptyLayout}
+              layout={PageLayout}
               component={props => (
                 <AuthPage {...props} authState={STATE_LOGIN} />
               )}
@@ -45,114 +43,39 @@ class App extends React.Component {
             <LayoutRoute
               exact
               path="/signup"
-              layout={EmptyLayout}
+              layout={PageLayout}
               component={props => (
                 <AuthPage {...props} authState={STATE_SIGNUP} />
               )}
             />
             <LayoutRoute
               exact
-              path="/login-modal"
-              layout={MainLayout}
-              component={AuthModalPage}
-            />
-            <LayoutRoute
-              exact
-              path="/"
+              path="/admin"
               layout={MainLayout}
               component={DashboardPage}
             />
             <LayoutRoute
               exact
-              path="/buttons"
+              path="/products"
               layout={MainLayout}
-              component={ButtonPage}
+              component={ProductsPage}
             />
             <LayoutRoute
               exact
-              path="/cards"
+              path="/categories"
               layout={MainLayout}
-              component={CardPage}
+              component={DashboardPage}
             />
             <LayoutRoute
               exact
-              path="/widgets"
+              path="/users"
               layout={MainLayout}
-              component={WidgetPage}
+              component={DashboardPage}
             />
             <LayoutRoute
-              exact
-              path="/typography"
-              layout={MainLayout}
-              component={TypographyPage}
+              layout={EmptyLayout}
+              component={NoFoundPage}            
             />
-            <LayoutRoute
-              exact
-              path="/alerts"
-              layout={MainLayout}
-              component={AlertPage}
-            />
-            <LayoutRoute
-              exact
-              path="/tables"
-              layout={MainLayout}
-              component={TablePage}
-            />
-            <LayoutRoute
-              exact
-              path="/badges"
-              layout={MainLayout}
-              component={BadgePage}
-            />
-            <LayoutRoute
-              exact
-              path="/button-groups"
-              layout={MainLayout}
-              component={ButtonGroupPage}
-            />
-            <LayoutRoute
-              exact
-              path="/dropdowns"
-              layout={MainLayout}
-              component={DropdownPage}
-            />
-            <LayoutRoute
-              exact
-              path="/progress"
-              layout={MainLayout}
-              component={ProgressPage}
-            />
-            <LayoutRoute
-              exact
-              path="/modals"
-              layout={MainLayout}
-              component={ModalPage}
-            />
-            <LayoutRoute
-              exact
-              path="/forms"
-              layout={MainLayout}
-              component={FormPage}
-            />
-            <LayoutRoute
-              exact
-              path="/input-groups"
-              layout={MainLayout}
-              component={InputGroupPage}
-            />
-            <LayoutRoute
-              exact
-              path="/charts"
-              layout={MainLayout}
-              component={ChartPage}
-            />
-            <LayoutRoute
-              exact
-              path="/register"
-              layout={MainLayout}
-              component={AuthPage}
-            />
-            <Redirect to="/" />
           </Switch>
         </GAListener>
       </BrowserRouter>

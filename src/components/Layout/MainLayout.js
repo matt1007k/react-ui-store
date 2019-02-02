@@ -31,7 +31,7 @@ class MainLayout extends React.Component {
 
       this.notificationSystem.addNotification({
         title: <MdImportantDevices />,
-        message: 'Welome to Reduction Admin!',
+        message: 'Welome to AdminTore!',
         level: 'info',
       });
     }, 1500);
@@ -90,7 +90,7 @@ class MainLayout extends React.Component {
     const { children } = this.props;
     return (
       <main className="cr-app bg-light">
-        <Sidebar />
+        <Sidebar title="AdminTore" />
         <Content fluid onClick={this.handleContentClick}>
           <Header />
           {children}
