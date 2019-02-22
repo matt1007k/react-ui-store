@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 import bn from 'utils/bemnames';
 
@@ -34,6 +35,9 @@ import SearchInput from 'components/SearchInput';
 
 import withBadge from 'hocs/withBadge';
 
+import { connect } from 'react-redux'
+import { logOut } from '../../actions/authAction'
+
 import { notificationsData } from 'demos/header';
 
 const bem = bn.create('header');
@@ -68,6 +72,11 @@ class Header extends React.Component {
     }
   };
 
+  componentDidMount() {
+    console.log(this.props);
+    
+  }
+
   toggleUserCardPopover = () => {
     this.setState({
       isOpenUserCardPopover: !this.state.isOpenUserCardPopover,
@@ -81,9 +90,14 @@ class Header extends React.Component {
     document.querySelector('.cr-sidebar').classList.toggle('cr-sidebar--open');
   };
 
+  logout = () => {
+    this.props.logOut()
+    //this.props.history.push('/login');
+  }
+
   render() {
     const { isNotificationConfirmed } = this.state;
-
+    
     return (
       <Navbar light expand className={bem.b('bg-white')}>
         <Nav navbar className="mr-2">
@@ -159,7 +173,7 @@ class Header extends React.Component {
                     <ListGroupItem tag="button" action className="border-light">
                       <MdHelp /> Help
                     </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
+                    <ListGroupItem tag="button" action className="border-light" onClick={this.logout}>
                       <MdExitToApp /> Signout
                     </ListGroupItem>
                   </ListGroup>
@@ -173,4 +187,12 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+Header.propTypes = {
+  auth: PropTypes.object.isRequired,
+  logOut: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+export default connect(mapStateToProps, {logOut})(Header);

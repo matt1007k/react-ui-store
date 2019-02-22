@@ -92,7 +92,7 @@ class MainLayout extends React.Component {
       <main className="cr-app bg-light">
         <Sidebar title="AdminTore" />
         <Content fluid onClick={this.handleContentClick}>
-          <Header />
+          <Header {...children}/>
           {children}
           <Footer />
         </Content>

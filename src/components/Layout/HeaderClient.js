@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import {NavLink} from 'react-router-dom'
 import {
     Navbar,
@@ -9,15 +11,31 @@ import {
     Card,
     CardBody,
     Row, 
-    Col
+    Col,
+    Popover,
+    PopoverBody,
+    ListGroup,
+    ListGroupItem,
 } from 'reactstrap'
 
 import {
     MdAccountCircle,
     MdPhone,
     MdMail,
-    MdSearch
+    MdSearch,
+    MdPersonPin,             
+    MdInsertChart,           
+    MdMessage,               
+    MdSettingsApplications,  
+    MdHelp,                  
+    MdExitToApp,             
 } from 'react-icons/lib/md'
+
+import { connect } from 'react-redux'
+import { logOut } from '../../actions/authAction'
+
+import Avatar from 'components/Avatar';
+import { UserCard } from 'components/Card';
 
 import Select from 'react-select'
 import bn from 'utils/bemnames'
@@ -44,19 +62,37 @@ class HeaderClient extends React.Component {
         super(props);
     
         this.toggleNavbar = this.toggleNavbar.bind(this);
+        this.logout = this.logout.bind(this)
         this.state = {
-          collapsed: false
-        };
-      }
-    
-      toggleNavbar() {
+            collapsed: false,
+            isOpenUserCardPopover: false,
+           
+        };        
+    }
+
+    componentDidMount() {
+        console.log(this.props.props);
+        
+    }
+
+    logout = () => {
+        this.props.logOut();
+        //this.props.history.push('/login');
+    }
+    toggleUserCardPopover = () => {
         this.setState({
-          collapsed: !this.state.collapsed
+          isOpenUserCardPopover: !this.state.isOpenUserCardPopover,
         });
-      }
+    };
+    
+    toggleNavbar() {
+        this.setState({
+            collapsed: !this.state.collapsed
+        });
+    }
    
     render() {
-        const { title } = this.props;
+        const { title, auth } = this.props;
         return (
             <header>
                 <Card>
@@ -83,23 +119,76 @@ class HeaderClient extends React.Component {
                                 </span>
                             </Col>
                             <Col md={4} xs={12} className="d-flex align-items-center justify-content-center ">
-                                                      
-                                <span className="mr-2">
-                                    <NavLink to="/signup" className="text-dark"><MdAccountCircle size={20} /> Crear cuenta</NavLink>
-                                </span> 
-                                <span className="mr-2">|</span>
-                                <span><NavLink to="/login" className="text-dark">Iniciar sesion</NavLink></span>
+                                                    
+                                {
+                                    !auth.token ?
+                                        (<div>
+                                            <span className="mr-2">
+                                                <NavLink to="/signup" className="text-dark"><MdAccountCircle size={20} /> Crear cuenta</NavLink>
+                                            </span> 
+                                            <span className="mr-2">|</span>
+                                            <span><NavLink to="/login" className="text-dark">Iniciar sesion</NavLink></span>
+                                        </div>) :
+                                        (<Nav>
+                                            <NavItem>
+                                            <BSNavLink id="Popover2">
+                                                <Avatar
+                                                    onClick={this.toggleUserCardPopover}
+                                                    className="can-click"
+                                                    />
+                                                {auth.email}
+                                            </BSNavLink>
+                                            <Popover
+                                            placement="bottom-end"
+                                            isOpen={this.state.isOpenUserCardPopover}
+                                            toggle={this.toggleUserCardPopover}
+                                            target="Popover2"
+                                            className="p-0 border-0"
+                                            style={{ minWidth: 250 }}>
+                                            <PopoverBody className="p-0 border-light">
+                                                <UserCard
+                                                title={auth.name}
+                                                subtitle={auth.email}
+                                                text="Last updated 3 mins ago"
+                                                className="border-light">
+                                                <ListGroup flush>
+                                                    <ListGroupItem tag="button" action className="border-light">
+                                                        <MdPersonPin /> Profile
+                                                    </ListGroupItem>
+                                                    <ListGroupItem tag="button" action className="border-light">
+                                                        <MdInsertChart /> Stats
+                                                    </ListGroupItem>
+                                                    <ListGroupItem tag="button" action className="border-light">
+                                                        <MdMessage /> Messages
+                                                    </ListGroupItem>
+                                                    <ListGroupItem tag="button" action className="border-light">
+                                                        <MdSettingsApplications /> Settings
+                                                    </ListGroupItem>
+                                                    <ListGroupItem tag="button" action className="border-light">
+                                                        <MdHelp /> Help
+                                                    </ListGroupItem>
+                                                    <ListGroupItem tag="button" action className="border-light" onClick={this.logout}>
+                                                        <MdExitToApp /> Signout
+                                                    </ListGroupItem>
+                                                </ListGroup>
+                                                </UserCard>
+                                            </PopoverBody>
+                                            </Popover>
+                                            
+                                            </NavItem>
+                                        </Nav>)
+                                }
                             </Col>
                         </Row>
                     </CardBody>
                 </Card>           
                 <Navbar light expand className={bem.b('bg-white')}>
-                    <NavbarBrand tag={NavLink} to="/home">
+                    <NavbarBrand tag={NavLink} to="/">
                         {title}
                     </NavbarBrand>
                     <Nav navbar className={bem.e('nav-right')}>
                         <NavItem>
-                            <BSNavLink tag={NavLink} to="/home">Inicio</BSNavLink>
+                            <BSNavLink tag={NavLink} to="/">Inicio</BSNavLink>
                         </NavItem>
                         <NavItem>
                             <BSNavLink tag={NavLink} to="/store">Store</BSNavLink>
@@ -121,4 +210,13 @@ class HeaderClient extends React.Component {
     }
 }
 
-export default HeaderClient
+HeaderClient.propTypes = {
+    auth: PropTypes.object.isRequired,
+    logOut: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+
+export default connect(mapStateToProps, {logOut})(HeaderClient)

@@ -12,7 +12,7 @@ class PageLayout extends React.Component {
         return(
         <div className="cr-app bg-light">
             <Content fluid>
-                <HeaderClient title="ShopTore" />
+                <HeaderClient title="ShopTore" {...children}/>
                     {children}  
                 <FooterClient />    
             </Content>          

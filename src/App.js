@@ -1,84 +1,102 @@
-import { STATE_LOGIN, STATE_SIGNUP } from 'components/AuthForm';
+
 import GAListener from 'components/GAListener';
-import { EmptyLayout, LayoutRoute, MainLayout, PageLayout } from 'components/Layout';
+import {
+  LayoutRoute, GuestRoute, AuthRoute, PrivateRoute, 
+  MainLayout, PageLayout, EmptyLayout
+} from 'components/Layout';
 
 // pages
-import AuthPage from 'pages/AuthPage';
+import LoginPage from './pages/auth/LoginPage';
+import SignUpPage from './pages/auth/SignUpPage';
+
 import DashboardPage from 'pages/DashboardPage';
-import ProductsPage from './pages/admin/ProductsPage';
+import ProductsPage from './pages/admin/products/ProductsPage';
+import CategoriesPage from './pages/admin/categories/CategoriesPage';
 
 import NoFoundPage from 'pages/errors/NoFoundPage';
 
 import HomePage from './pages/Client/HomePage';
+import CheckOutPage from './pages/Client/CheckOutPage';
 
 import React from 'react';
+import PropTypes from 'prop-types'
+
 import componentQueries from 'react-component-queries';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import './styles/reduction.css';
 
-const getBasename = () => {
-  return `/${process.env.PUBLIC_URL.split('/').pop()}`;
-};
+
 
 class App extends React.Component {
   render() {
+    const { location } = this.props;
     return (
-      <BrowserRouter basename={getBasename()}>
+      
         <GAListener>
-          <Switch>
+        <Switch>
             <LayoutRoute
               exact
               path="/"
+              location={location}
               layout={PageLayout}
               component={HomePage}
             />
-            <LayoutRoute
+            <AuthRoute
+              exact
+              path="/checkout"
+              location={location}
+              layout={PageLayout}
+              component={CheckOutPage}
+            />
+            <GuestRoute
               exact
               path="/login"
+              location={location}
               layout={PageLayout}
-              component={props => (
-                <AuthPage {...props} authState={STATE_LOGIN} />
-              )}
+              component={LoginPage}
             />
-            <LayoutRoute
+            <GuestRoute
               exact
               path="/signup"
+              location={location}
               layout={PageLayout}
-              component={props => (
-                <AuthPage {...props} authState={STATE_SIGNUP} />
-              )}
+              component={SignUpPage}
             />
-            <LayoutRoute
+            <PrivateRoute
               exact
               path="/admin"
+              location={location}
               layout={MainLayout}
               component={DashboardPage}
             />
-            <LayoutRoute
+            <PrivateRoute
               exact
               path="/products"
+              location={location}
               layout={MainLayout}
               component={ProductsPage}
             />
-            <LayoutRoute
+            <PrivateRoute
               exact
               path="/categories"
+              location={location}
               layout={MainLayout}
-              component={DashboardPage}
+              component={CategoriesPage}
             />
-            <LayoutRoute
+            <PrivateRoute
               exact
               path="/users"
+              location={location}
               layout={MainLayout}
               component={DashboardPage}
             />
             <LayoutRoute
+              location={location}
               layout={EmptyLayout}
               component={NoFoundPage}            
             />
           </Switch>
         </GAListener>
-      </BrowserRouter>
     );
   }
 }
@@ -106,5 +124,12 @@ const query = ({ width }) => {
 
   return { breakpoint: 'xs' };
 };
+
+App.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired
+  }).isRequired,
+}
+
 
 export default componentQueries(query)(App);
