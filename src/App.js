@@ -1,19 +1,19 @@
 
-import GAListener from 'components/GAListener';
+import GAListener from './components/GAListener';
 import {
   LayoutRoute, GuestRoute, AuthRoute, PrivateRoute, 
   MainLayout, PageLayout, EmptyLayout
-} from 'components/Layout';
+} from './components/Layout';
 
 // pages
 import LoginPage from './pages/auth/LoginPage';
 import SignUpPage from './pages/auth/SignUpPage';
 
-import DashboardPage from 'pages/DashboardPage';
+import DashboardPage from './pages/DashboardPage';
 import ProductsPage from './pages/admin/products/ProductsPage';
 import CategoriesPage from './pages/admin/categories/CategoriesPage';
 
-import NoFoundPage from 'pages/errors/NoFoundPage';
+import NoFoundPage from './pages/errors/NoFoundPage';
 
 import HomePage from './pages/Client/HomePage';
 import CheckOutPage from './pages/Client/CheckOutPage';

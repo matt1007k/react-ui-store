@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getColor } from 'utils/colors';
+import { getColor } from '../utils/colors';
 
 import {
   Card,
@@ -39,21 +39,21 @@ import {
   avatarsData,
   todosData,
   chartjs,
-} from 'demos/dashboardPage';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
+} from '../demos/dashboardPage';
+import { getStackLineChart, stackLineChartOptions } from '../demos/chartjs';
 
-import Page from 'components/Page';
+import Page from '../components/Page';
 
-import SupportTicket from 'components/SupportTicket';
-import ProductMedia from 'components/ProductMedia';
-import UserProgressTable from 'components/UserProgressTable';
+import SupportTicket from '../components/SupportTicket';
+import ProductMedia from '../components/ProductMedia';
+import UserProgressTable from '../components/UserProgressTable';
 
-import { AnnouncementCard, TodosCard } from 'components/Card';
+import { AnnouncementCard, TodosCard } from '../components/Card';
 
-import { NumberWidget, IconWidget } from 'components/Widget';
+import { NumberWidget, IconWidget } from '../components/Widget';
 
-import MapWithBubbles from 'components/MapWithBubbles';
-import HorizontalAvatarList from 'components/HorizontalAvatarList';
+import MapWithBubbles from '../components/MapWithBubbles';
+import HorizontalAvatarList from '../components/HorizontalAvatarList';
 
 const today = new Date();
 const lastWeek = new Date(

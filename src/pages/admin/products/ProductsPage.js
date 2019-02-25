@@ -24,7 +24,7 @@ import {
     MdAddBox
 } from 'react-icons/lib/md'
 
-import Page from 'components/Page';
+import Page from '../../../components/Page';
 import {getProducts} from '../../../actions/productsAction';
 
 class ProductsPage extends React.Component {

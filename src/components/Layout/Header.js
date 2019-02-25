@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
-import bn from 'utils/bemnames';
+import bn from '../../utils/bemnames';
 
 import {
   Navbar,
@@ -28,17 +28,17 @@ import {
   MdExitToApp,
 } from 'react-icons/lib/md';
 
-import Avatar from 'components/Avatar';
-import { UserCard } from 'components/Card';
-import Notifications from 'components/Notifications';
-import SearchInput from 'components/SearchInput';
+import Avatar from '../Avatar';
+import { UserCard } from '../Card';
+import Notifications from '../Notifications';
+import SearchInput from '../SearchInput';
 
-import withBadge from 'hocs/withBadge';
+import withBadge from '../../hocs/withBadge';
 
 import { connect } from 'react-redux'
 import { logOut } from '../../actions/authAction'
 
-import { notificationsData } from 'demos/header';
+import { notificationsData } from '../../demos/header';
 
 const bem = bn.create('header');
 

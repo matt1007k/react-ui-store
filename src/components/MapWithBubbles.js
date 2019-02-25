@@ -9,9 +9,9 @@ import {
 } from 'react-simple-maps';
 import { scaleLinear } from 'd3-scale';
 
-import { getColor } from 'utils/colors';
+import { getColor } from '../utils/colors';
 
-import world50m from 'assets/geo-data/world-50m.json';
+import world50m from '../assets/geo-data/world-50m.json';
 
 const cityScale = scaleLinear()
   .domain([0, 37843000])
@@ -23,7 +23,7 @@ class BubbleMap extends Component {
   };
 
   async componentDidMount() {
-    const cities = await import('assets/geo-data/world-most-populous-cities.json');
+    const cities = await import('../assets/geo-data/world-most-populous-cities.json');
 
     this.setState({
       cities,

@@ -24,7 +24,7 @@ import {
     MdAddBox
 } from 'react-icons/lib/md'
 
-import Page from 'components/Page';
+import Page from '../../../components/Page';
 import {getCategories} from '../../../actions/categoriesAction';
 
 class CategoriesPage extends React.Component {

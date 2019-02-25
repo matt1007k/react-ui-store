@@ -34,11 +34,11 @@ import {
 import { connect } from 'react-redux'
 import { logOut } from '../../actions/authAction'
 
-import Avatar from 'components/Avatar';
-import { UserCard } from 'components/Card';
+import Avatar from '../Avatar';
+import { UserCard } from '../Card';
 
 import Select from 'react-select'
-import bn from 'utils/bemnames'
+import bn from '../../utils/bemnames'
 
 const bem = bn.create('header')
 
